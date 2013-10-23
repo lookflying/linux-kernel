@@ -6,6 +6,7 @@
 #include "sched.h"
 
 #include <linux/slab.h>
+#include <linux/module.h>
 
 int sched_rr_timeslice = RR_TIMESLICE;
 
@@ -1964,7 +1965,7 @@ static unsigned int get_rr_interval_rt(struct rq *rq, struct task_struct *task)
 		return 0;
 }
 
-const struct sched_class rt_sched_class = {
+struct sched_class rt_sched_class = {
 	.next			= &fair_sched_class,
 	.enqueue_task		= enqueue_task_rt,
 	.dequeue_task		= dequeue_task_rt,
@@ -1996,6 +1997,8 @@ const struct sched_class rt_sched_class = {
 	.switched_to		= switched_to_rt,
 };
 
+
+EXPORT_SYMBOL(rt_sched_class);
 #ifdef CONFIG_SCHED_DEBUG
 extern void print_rt_rq(struct seq_file *m, int cpu, struct rt_rq *rt_rq);
 

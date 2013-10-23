@@ -33,7 +33,7 @@
 #include <trace/events/sched.h>
 
 #include "sched.h"
-
+#include <linux/module.h>
 /*
  * Targeted preemption latency for CPU-bound tasks:
  * (default: 6ms * (1 + ilog(ncpus)), units: nanoseconds)
@@ -234,7 +234,7 @@ calc_delta_mine(unsigned long delta_exec, unsigned long weight,
 }
 
 
-const struct sched_class fair_sched_class;
+struct sched_class fair_sched_class;
 
 /**************************************************************
  * CFS operations on generic schedulable entities:
@@ -6176,7 +6176,7 @@ static unsigned int get_rr_interval_fair(struct rq *rq, struct task_struct *task
 /*
  * All the scheduling class methods:
  */
-const struct sched_class fair_sched_class = {
+struct sched_class fair_sched_class = {
 	.next			= &idle_sched_class,
 	.enqueue_task		= enqueue_task_fair,
 	.dequeue_task		= dequeue_task_fair,
@@ -6212,6 +6212,8 @@ const struct sched_class fair_sched_class = {
 	.task_move_group	= task_move_group_fair,
 #endif
 };
+
+EXPORT_SYMBOL(fair_sched_class);
 
 #ifdef CONFIG_SCHED_DEBUG
 void print_cfs_stats(struct seq_file *m, int cpu)
