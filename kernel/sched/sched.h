@@ -961,7 +961,7 @@ static const u32 prio_to_wmult[40] = {
 #define DEQUEUE_SLEEP		1
 
 struct sched_class {
-	const struct sched_class *next;
+	struct sched_class *next;
 
 	void (*enqueue_task) (struct rq *rq, struct task_struct *p, int flags);
 	void (*dequeue_task) (struct rq *rq, struct task_struct *p, int flags);
@@ -1010,10 +1010,10 @@ struct sched_class {
 #define for_each_class(class) \
    for (class = sched_class_highest; class; class = class->next)
 
-extern const struct sched_class stop_sched_class;
-extern const struct sched_class rt_sched_class;
-extern const struct sched_class fair_sched_class;
-extern const struct sched_class idle_sched_class;
+extern struct sched_class stop_sched_class;
+extern struct sched_class rt_sched_class;
+extern struct sched_class fair_sched_class;
+extern struct sched_class idle_sched_class;
 
 
 #ifdef CONFIG_SMP
